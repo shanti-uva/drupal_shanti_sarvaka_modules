@@ -1,0 +1,4 @@
+name = Shanti Sarvaka Modules
+description = "A suite of modules for integration with the Shanti Sarvaka Theme"
+core = 7.x
+package = Shanti Sarvaka
