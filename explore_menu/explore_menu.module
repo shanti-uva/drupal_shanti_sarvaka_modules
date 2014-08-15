@@ -12,7 +12,7 @@ define('EXPLORE_LINK_TEXT', 'EXPLORE');
 function explore_menu_block_info() {
   $blocks = array();
   $blocks['explore_menu_block'] = array(
-    'info' => t('Explore Menu Block'),
+    'info' => t('Explore Collections Menu Block'),
    );
   return $blocks;
 }
