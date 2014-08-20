@@ -7,6 +7,20 @@ define('EXPLORE_DIV_TITLE', 'EXPLORE COLLECTIONS');
 define('EXPLORE_LINK_TEXT', 'EXPLORE');
 
 /**
+ * Implements hook_menu().
+ */
+function explore_menu_menu() {
+  $items['admin/config/shanti/explore_menu'] = array(
+    'title' => 'Shanti Explore Menu',
+    'description' => 'Configure Shanti Collections Explore menu',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('explore_menu_settings_form'),
+    'access arguments' => array('administer site configuration'),
+  );
+  return $items;
+}
+
+/**
  * Implements hook_block_info().
  */
 function explore_menu_block_info() {
@@ -61,11 +75,25 @@ function explore_menu_block_configure($delta='') {
       // Explanation of where data comes from
       $form['data_explanation'] = array(
         '#type' => 'markup',
-        '#markup' => '<div><strong>' . t('Note:') . '</strong> <p>' . 
-          t('The links themselves are defined by a JSON file contained with the Shanti Explore Menu module\'s js folder.') . '</p></div>',
+        '#markup' => '<div><strong>' . t('Note:') . '</strong> ' . 
+          t('The links themselves are defined by a JSON file contained with the Shanti Explore Menu module\'s js folder.') . '</div>',
                       
       );
-      break;
+
+		  $form['update_links'] = array(
+		    '#type' => 'button',
+		    '#value' => t('Update Menu Links'),
+		    '#attributes' => array('title' => t('Update Explore Menu Links from JSON File')),
+		    '#prefix' => '<div class="form-item">',
+		    '#suffix' => '<div id="em-update-msg"></div></div>',
+		    '#ajax' => array(
+				  'callback' => 'explore_menu_update',
+		      'wrapper' => 'em-update-msg',
+		      'method' => 'replace',
+				),
+		  );
+	
+      break; // Explore block case switch break
   }
   
   return $form;
@@ -85,3 +113,52 @@ function explore_menu_get_iconclass($title) {
   return FALSE;
 }
 
+/**
+ * Updates explore menu links from JS at explore_menu/js/shanti-collections.json
+ * TODO: Allow users to upload their custom js files (?)
+ */
+function explore_menu_update($filename = 'shanti-collections') {
+	global $base_url, $base_path;
+  $data = file_get_contents(drupal_get_path('module', 'explore_menu') . '/js/shanti-collections.json');
+	// Remove all previous links
+	$mn = 'shanti-explore-menu';
+	$linktree = menu_tree_all_data($mn);
+	$rct = 0;
+	foreach($linktree as $lnm => $link) {
+		$mlid = $link['link']['mlid'];
+		menu_link_delete($mlid);
+		$rct++;
+	}
+  $linkdata = json_decode($data);
+	$msg = "";
+	$ct = 0;
+  foreach($linkdata->links as $n => $link) {
+  	if(!isset($link->disabled) || $link->disabled == FALSE) {
+  		$hrefchar = substr($link->href,0,1);
+			if($hrefchar == '/' || $hrefchar == '#') {
+				$link->href = $base_url . $base_path . $link->href;
+			}
+	    $item = array(
+	      'link_path' => $link->href,
+	      'link_title' => $link->text,
+	      'menu_name' => $mn,
+	      'weight' => ($n - 50),
+	      'language' => $linkdata->language,
+	      'plid' => 0, // Parent menu item, 0 if menu item is on top level
+	      'module' => 'menu',
+	    );
+	    $mlid = menu_link_save($item); 
+			if(!$mlid) {
+				$msg .= "<li class=\"alert-warning\">{$item['link_title']} ({$item['link_path']}) could not be saved.</li>";
+			} else {
+				$ct++;
+			}
+		}
+  }
+  if(empty($msg)) {
+  	$msg = "<ul><li class=\"alert-success\">Explore Collections Menus was successfully updated! ($rct items removed. $ct items added.)</li></ul>";
+  } else {
+  	$msg = '<ul>' . $msg . '</ul>';
+  }
+	return "<div id=\"em-update-msg\">$msg</div>";
+}
