@@ -5,17 +5,17 @@
 	"links": [
 		{"class": "overview", "text": "Overview", "href": "http://shanti.virginia.edu/"},
 		{"class": "subjects", "text": "Subjects", "href": "http://aardvark.drupal-dev.shanti.virginia.edu/subjects"},
-		{"class": "essays", "text": "Essays", "href": "http://essays.drupal-dev.shanti.virginia.edu/"},
 		{"class": "places", "text": "Places", "href": "http://aardvark.drupal-dev.shanti.virginia.edu/places"},
+		{"class": "texts", "text": "Texts", "href": "http://essays.drupal-dev.shanti.virginia.edu/"},
+		{"class": "sources", "text": "Sources", "href": "http://csc.opentactics.com/csc-search?field_zotero_collections=All"},
+		{"class": "audio-video", "text": "Audio-Video", "href": "http://mediabase.drupal-dev.shanti.virginia.edu/"},
+		{"class": "photos", "text": "Photos", "href": "http://mms.thlib.org/"},
+		{"class": "visuals", "text": "Visuals", "href": "http://shiva.drupal-dev.shanti.virginia.edu/"},
+		{"class": "essays", "text": "Essays", "href": "/#tab-texts", "disabled": true},
 		{"class": "agents", "text": "Agents", "href": "http://connections.thlib.org/", "disabled": true},
 		{"class": "events", "text": "Events", "href": "http://mediabase.drupal-dev.shanti.virginia.edu/#tab-events", "disabled": true},
-		{"class": "photos", "text": "Photos", "href": "http://mms.thlib.org/"},
-		{"class": "audio-video", "text": "Audio-Video", "href": "http://mediabase.drupal-dev.shanti.virginia.edu/"},
-		{"class": "visuals", "text": "Visuals", "href": "http://shiva.drupal-dev.shanti.virginia.edu/"},
-		{"class": "texts", "text": "Texts", "href": "/#tab-texts", "disabled": true},
 		{"class": "maps", "text": "Maps", "href": "/#tab-maps", "disabled": true},
 		{"class": "community", "text": "Community", "href": "/#tab-community", "disabled": true},
-		{"class": "terms", "text": "Terms", "href": "http://dictionary.thlib.org/"},
-		{"class": "sources", "text": "Sources", "href": "http://biblio.drupal-dev.shanti.virginia.edu/", "disabled": true}
+		{"class": "terms", "text": "Terms", "href": "http://dictionary.thlib.org/", "disabled": true}
 	]
 }
