@@ -10,11 +10,11 @@ define('EXPLORE_LINK_TEXT', 'EXPLORE');
  * Implements hook_menu().
  */
 function explore_menu_menu() {
-  $items['admin/config/shanti/explore_menu'] = array(
+  $items['admin/config/user-interface/explore_menu'] = array(
     'title' => 'Shanti Explore Menu',
     'description' => 'Configure Shanti Collections Explore menu',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('explore_menu_settings_form'),
+    'page callback' => 'drupal_goto',
+    'page arguments' => array('admin/structure/block/manage/explore_menu/explore_menu_block/configure'),
     'access arguments' => array('administer site configuration'),
   );
   return $items;
@@ -35,7 +35,7 @@ function explore_menu_block_info() {
 * Implements hook_block_configure().
 *   Configures classes for section and div element plus the title text for the popup
 */
-function explore_menu_block_configure($delta='') {
+function explore_menu_block_configure($delta='explore_menu_block') {
   $form = array();
   
   switch($delta) {
