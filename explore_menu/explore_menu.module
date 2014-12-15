@@ -32,6 +32,27 @@ function explore_menu_block_info() {
 }
 
 /**
+ * display link for opening and closing explore menu (meant for Shanti Sarvaka theme)
+ */
+function explore_menu_block_view($delta='') {
+	$block = array();
+	switch($delta) {
+		case 'explore_menu_block': 
+			$out = '<li id="collexplink" class="explore closed"><a href="#">' . variable_get('explore_link_text', EXPLORE_LINK_TEXT) . '<i class="icon shanticon-directions"></i></a></li>';
+			$block['content'] = $out;
+			break;
+	}
+	return $block;
+}
+
+/**
+ * Add explore_menu to vars with the shanti-explore menu tree in it to be displayed in page template
+ */
+function explore_menu_preprocess_page(&$vars) {
+	$vars['explore_menu'] = menu_tree('shanti-explore-menu');
+}
+
+/**
 * Implements hook_block_configure().
 *   Configures classes for section and div element plus the title text for the popup
 */

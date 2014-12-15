@@ -1,7 +1,7 @@
 (function ($) {
   Drupal.behaviors.exploreMenu = {
     attach: function (context, settings) {
-     if(context == document) { 
+     if(context == document) {
 	     $('body').on('click', '.explore>a, .collections .close', function(){
 					$(".collections").slideToggle(200);
 				});
