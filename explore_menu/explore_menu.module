@@ -49,6 +49,7 @@ function explore_menu_block_view($delta='') {
  * Add explore_menu to vars with the shanti-explore menu tree in it to be displayed in page template
  */
 function explore_menu_preprocess_page(&$vars) {
+	
 	$vars['explore_menu'] = menu_tree('shanti-explore-menu');
 }
 
