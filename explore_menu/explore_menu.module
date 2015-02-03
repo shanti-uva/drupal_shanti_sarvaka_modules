@@ -47,10 +47,27 @@ function explore_menu_block_view($delta='') {
 
 /**
  * Add explore_menu to vars with the shanti-explore menu tree in it to be displayed in page template
+ * Modify tree to keep disabled links with #attribute/disabled to be displayed as greyed out.
  */
 function explore_menu_preprocess_page(&$vars) {
 	
-	$vars['explore_menu'] = menu_tree('shanti-explore-menu');
+	//$vars['explore_menu'] = menu_tree('shanti-explore-menu');
+	
+	$hidden = array();
+	$menu_name = 'shanti-explore-menu';
+  $tree = menu_tree_page_data($menu_name);
+	foreach($tree as $tid => &$item) {
+	  if($item['link']['hidden'] == 1) {
+	    $hidden[] = $item['link']['mlid'];
+	    $item['link']['hidden'] = 0;
+	  }
+	}
+
+  $mto = menu_tree_output($tree);
+	foreach($hidden as $hid) {
+	  $mto[$hid]['#attributes']['disabled'] = 'disabled'; 
+	}
+	$vars['explore_menu'] = $mto;
 }
 
 /**
