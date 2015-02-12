@@ -10,14 +10,19 @@ define('EXPLORE_LINK_TEXT', 'EXPLORE');
  * Implements hook_menu().
  */
 function explore_menu_menu() {
+	
   $items['admin/config/user-interface/explore_menu'] = array(
     'title' => 'Shanti Explore Menu',
     'description' => 'Configure Shanti Collections Explore menu',
-    'page callback' => 'drupal_goto',
-    'page arguments' => array('admin/structure/block/manage/explore_menu/explore_menu_block/configure'),
+    'page callback' => 'explore_menu_configure',
     'access arguments' => array('administer site configuration'),
   );
+	
   return $items;
+}
+
+function explore_menu_configure() {
+	drupal_goto('admin/structure/block/manage/explore_menu/explore_menu_block/configure');
 }
 
 /**

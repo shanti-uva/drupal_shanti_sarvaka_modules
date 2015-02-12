@@ -1,7 +1,7 @@
 name = Shanti Sarvaka Explore Menu 
 description = "Provides a block to place in the top bar that creates the explore dropdown menu for the Shanti Sarvaka theme"
 core = 7.x
-package = Sarvaka Modules
+package = Shanti
 
 files[] = explore_menu.module
 files[] = explore_menu.install
