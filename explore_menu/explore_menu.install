@@ -20,7 +20,7 @@ function explore_menu_install() {
 	  // Add Links to Menu
 	  $datastr = file_get_contents(drupal_get_path('module', 'explore_menu') . '/js/shanti-collections.json');
 	  $linkdata = json_decode($datastr);
-	  foreach($linkdata->links as $n => $link) {
+	  foreach($linkdata->links->prod as $n => $link) {
 	  	if(!isset($link->disabled) || $link->disabled == FALSE) {
 	  		$hrefchar = substr($link->href,0,1);
 				if($hrefchar == '/' || $hrefchar == '#') {
