@@ -175,7 +175,7 @@ function explore_menu_block_configure($delta='explore_menu_block') {
 function explore_menu_get_iconclass($title) {
   $datastr = file_get_contents(drupal_get_path('module', 'explore_menu') . '/js/shanti-collections.json');
   $json = json_decode($datastr);
-  foreach($json->links as $n => $link) {
+  foreach($json->prod->links as $n => $link) {
     if($link->text == $title) {
       return $link->class;
     }
