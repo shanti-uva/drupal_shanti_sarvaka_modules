@@ -123,13 +123,39 @@ function explore_menu_block_configure($delta='explore_menu_block') {
           t('The links themselves are defined by a JSON file contained with the Shanti Explore Menu module\'s js folder.') . '</div>',
                       
       );
-
-		  $form['update_links'] = array(
+			
+			// Update links field set
+			$form['update_links'] = array(
+				'#type' => 'fieldset',
+				'#title' => t('Reset Menu Links'),
+			);
+				// Instructions
+			$form['update_links']['desc'] = array(
+				'#type' => 'markup',
+				'#markup' => t('<p style="width: 80%;">The button below will reset the links in the explorer menu from the JSON file in the explorer menu module. You must first choose the server, or domain, you are working with from the drop down list.</p>'),
+			);
+				// Choose domain
+			$form['update_links']['update_links_domain'] = array(
+				'#type' => 'select',
+				'#options' => array(
+					'none' => t('Choose a Domain'),
+					'dev' => t('Dev'),
+					'test' => t('Test'),
+					'prod' => t('Production'),
+				),
+			);
+				// Update Button
+		  $form['update_links']['update_button'] = array(
 		    '#type' => 'button',
-		    '#value' => t('Update Menu Links'),
-		    '#attributes' => array('title' => t('Update Explore Menu Links from JSON File')),
+		    '#value' => t('Reset Links'),
+		    '#attributes' => array('title' => t('Reset Explore Menu Links from JSON File')),
 		    '#prefix' => '<div class="form-item">',
 		    '#suffix' => '<div id="em-update-msg"></div></div>',
+		    '#states' => array(
+		      'invisible' => array(
+		        ':input[name="update_links_domain"]' => array('value' => 'none'),
+		      ),
+		    ),
 		    '#ajax' => array(
 				  'callback' => 'explore_menu_update',
 		      'wrapper' => 'em-update-msg',
@@ -149,7 +175,7 @@ function explore_menu_block_configure($delta='explore_menu_block') {
 function explore_menu_get_iconclass($title) {
   $datastr = file_get_contents(drupal_get_path('module', 'explore_menu') . '/js/shanti-collections.json');
   $json = json_decode($datastr);
-  foreach($json->links as $n => $link) {
+  foreach($json->links->prod as $n => $link) {
     if($link->text == $title) {
       return $link->class;
     }
@@ -161,8 +187,9 @@ function explore_menu_get_iconclass($title) {
  * Updates explore menu links from JS at explore_menu/js/shanti-collections.json
  * TODO: Allow users to upload their custom js files (?)
  */
-function explore_menu_update($filename = 'shanti-collections') {
+function explore_menu_update($form, $form_state) {
 	global $base_url, $base_path;
+	$domain = $form_state['values']['update_links_domain'];
   $data = file_get_contents(drupal_get_path('module', 'explore_menu') . '/js/shanti-collections.json');
 	// Remove all previous links
 	$mn = 'shanti-explore-menu';
@@ -173,36 +200,41 @@ function explore_menu_update($filename = 'shanti-collections') {
 		menu_link_delete($mlid);
 		$rct++;
 	}
-  $linkdata = json_decode($data);
+	$jsondata = json_decode($data);
+  $linkdata = $jsondata->links->{$domain};
 	$msg = "";
 	$ct = 0;
-  foreach($linkdata->links as $n => $link) {
-  	if(!isset($link->disabled) || $link->disabled == FALSE) {
-  		$hrefchar = substr($link->href,0,1);
-			if($hrefchar == '/' || $hrefchar == '#') {
-				$link->href = $base_url . $base_path . $link->href;
+	if(empty($linkdata)) {
+		$msg = t('<p style="color:red;">The domain you have chosen is not valid.</p>');
+	} else {
+	  foreach($linkdata as $n => $link) {
+	  	if(!isset($link->disabled) || $link->disabled == FALSE) {
+	  		$hrefchar = substr($link->href,0,1);
+				if($hrefchar == '/' || $hrefchar == '#') {
+					$link->href = $base_url . $base_path . $link->href;
+				}
+		    $item = array(
+		      'link_path' => $link->href,
+		      'link_title' => $link->text,
+		      'menu_name' => $mn,
+		      'weight' => ($n - 50),
+		      'language' => $linkdata->language,
+		      'plid' => 0, // Parent menu item, 0 if menu item is on top level
+		      'module' => 'menu',
+		    );
+		    $mlid = menu_link_save($item); 
+				if(!$mlid) {
+					$msg .= "<li class=\"alert-warning\">{$item['link_title']} ({$item['link_path']}) could not be saved.</li>";
+				} else {
+					$ct++;
+				}
 			}
-	    $item = array(
-	      'link_path' => $link->href,
-	      'link_title' => $link->text,
-	      'menu_name' => $mn,
-	      'weight' => ($n - 50),
-	      'language' => $linkdata->language,
-	      'plid' => 0, // Parent menu item, 0 if menu item is on top level
-	      'module' => 'menu',
-	    );
-	    $mlid = menu_link_save($item); 
-			if(!$mlid) {
-				$msg .= "<li class=\"alert-warning\">{$item['link_title']} ({$item['link_path']}) could not be saved.</li>";
-			} else {
-				$ct++;
-			}
-		}
-  }
-  if(empty($msg)) {
-  	$msg = "<ul><li class=\"alert-success\">Explore Collections Menus was successfully updated! ($rct items removed. $ct items added.)</li></ul>";
-  } else {
-  	$msg = '<ul>' . $msg . '</ul>';
-  }
+	  }
+	  if(empty($msg)) {
+	  	$msg = "<ul><li class=\"alert-success\">Explore Collections Menus was successfully updated! ($rct items removed. $ct items added.)</li></ul>";
+	  } else {
+	  	$msg = '<ul>' . $msg . '</ul>';
+	  }
+	}
 	return "<div id=\"em-update-msg\">$msg</div>";
 }
