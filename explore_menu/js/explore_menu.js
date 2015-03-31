@@ -3,7 +3,7 @@
     attach: function (context, settings) {
      if(context == document) {
 	     $('.explore>a').bind('click', function(e){
-					$('.collections').slideToggle(400);
+					$('.collections').slideToggle(150);
 				});
 			}
     }
