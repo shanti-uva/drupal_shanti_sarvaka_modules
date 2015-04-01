@@ -2,11 +2,9 @@
   Drupal.behaviors.exploreMenu = {
     attach: function (context, settings) {
      if(context == document) {
-	       $(".explore>a").toggle(function(){
-				    $(".collections").animate({height:125},200);
-				  },function(){
-				    $(".collections").animate({height:0},200);
-				  });
+	     $('body').on('click', '.explore>a, .collections .close', function(e){
+					$(".collections").slideToggle(200);
+				});
 			}
     }
   };
