@@ -2,8 +2,8 @@
   Drupal.behaviors.exploreMenu = {
     attach: function (context, settings) {
      if(context == document) {
-	     $(".explore>a").on("click", function(e){
-					$(".collections").animate( { height:110px }, 'fast');
+	     $('body').on('click', '.explore>a, .collections .close', function(e){
+					$(".collections").slideToggle(200);
 				});
 			}
     }
