@@ -11,6 +11,7 @@
 	     //      event.stopPropagation();
 	     //      $('.collections').slideToggle(200);
 	     // });
-    }
+	    }
+	  }
   };
 })(jQuery);
