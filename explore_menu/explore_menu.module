@@ -166,7 +166,14 @@ function explore_menu_block_configure($delta='explore_menu_block') {
       break; // Explore block case switch break
   }
   
-  return system_settings_form($form);
+  return $form;
+}
+
+function explore_menu_block_save($delta = '', $edit = array()) {
+	variable_set('explore_section_class', $edit['explore_section_class']);
+	variable_set('explore_div_class', $edit['explore_div_class']);
+	variable_set('explore_div_title', $edit['explore_div_title']);
+	variable_set('explore_link_text', $edit['explore_link_text']);
 }
 
 /**
