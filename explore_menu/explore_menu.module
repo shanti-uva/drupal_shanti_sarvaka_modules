@@ -3,7 +3,7 @@
 // Define CONSTANTS used by this module: css class and title
 define('EXPLORE_SECTION_CLASS', 'container opencollect collections');
 define('EXPLORE_DIV_CLASS', 'col-sm-12 col-md-10 col-md-offset-1');
-define('EXPLORE_DIV_TITLE', 'EXPLORE COLLECTIONS');
+define('EXPLORE_DIV_TITLE', 'EXPLORE');
 define('EXPLORE_LINK_TEXT', 'EXPLORE');
 
 /**
@@ -13,7 +13,7 @@ function explore_menu_menu() {
 	
   $items['admin/config/user-interface/explore_menu'] = array(
     'title' => 'Shanti Explore Menu',
-    'description' => 'Configure Shanti Collections Explore menu',
+    'description' => 'Configure Shanti Explore menu',
     'page callback' => 'explore_menu_configure',
     'access arguments' => array('administer site configuration'),
   );
@@ -31,7 +31,7 @@ function explore_menu_configure() {
 function explore_menu_block_info() {
   $blocks = array();
   $blocks['explore_menu_block'] = array(
-    'info' => t('Explore Collections Menu Block'),
+    'info' => t('Shanti Explore Menu Block'),
    );
   return $blocks;
 }
