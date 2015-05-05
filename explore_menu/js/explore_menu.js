@@ -2,10 +2,16 @@
   Drupal.behaviors.exploreMenu = {
     attach: function (context, settings) {
      if(context == document) {
-	     $('body').on('click', '.explore>a, .collections .close', function(e){
-					$(".collections").slideToggle(200);
-				});
-			}
-    }
+	     $('.explore > a').click( function(event){
+	           event.stopPropagation();
+	           $('.collections').slideToggle(200);
+	       });
+	       
+	     // $('.collections .close').click( function(event){
+	     //      event.stopPropagation();
+	     //      $('.collections').slideToggle(200);
+	     // });
+	    }
+	  }
   };
 })(jQuery);
