@@ -166,7 +166,7 @@ function explore_menu_block_configure($delta='explore_menu_block') {
       break; // Explore block case switch break
   }
   
-  return $form;
+  return system_settings_form($form);
 }
 
 /**
