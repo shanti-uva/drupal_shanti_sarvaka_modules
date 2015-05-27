@@ -1,0 +1,7 @@
+name = Shanti Sarvaka JIRA Collector
+description = "Provides a block to add to page to create a report issue button"
+core = 7.x
+package = Shanti
+
+files[] = jira_collector.module
+
