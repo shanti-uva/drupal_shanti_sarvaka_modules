@@ -9,8 +9,8 @@
 			{"class": "places", "text": "Places", "href": "http://badger.drupal-dev.shanti.virginia.edu/places"},
 			{"class": "texts", "text": "Texts", "href": "http://texts.drupal-dev.shanti.virginia.edu/"},
 			{"class": "logo-shanti", "text": "Knowledge Base", "href": "https://wiki.shanti.virginia.edu/display/KB/UVa+Knowledge+Base"},
-			{"class": "sources", "text": "Sources", "href": "http://sources.drupal-dev.shanti.virginia.edu"},
-			{"class": "audio-video", "text": "Audio-Video", "href": "http://mediabase.drupal-dev.shanti.virginia.edu/"},
+			{"class": "sources", "text": "Sources", "href": "http://sources.drupal-dev.shanti.virginia.edu/"},
+			{"class": "audio-video", "text": "Audio-Video", "href": "http://audio-video.drupal-dev.shanti.virginia.edu/"},
 			{"class": "images", "text": "Images", "href": "http://images.drupal-dev.shanti.virginia.edu/"},
 			{"class": "visuals", "text": "Visuals", "href": "http://visuals.drupal-dev.shanti.virginia.edu/"}
 		],
@@ -20,7 +20,7 @@
 			{"class": "places", "text": "Places", "href": "http://mandala.drupal-test.shanti.virginia.edu/places"},
 			{"class": "texts", "text": "Texts", "href": "http://texts.drupal-test.shanti.virginia.edu/"},
 			{"class": "logo-shanti", "text": "Knowledge Base", "href": "https://wiki.shanti.virginia.edu/display/KB/UVa+Knowledge+Base"},
-			{"class": "sources", "text": "Sources", "href": "http://sources.drupal-test.shanti.virginia.edu"},
+			{"class": "sources", "text": "Sources", "href": "http://sources.drupal-test.shanti.virginia.edu/"},
 			{"class": "audio-video", "text": "Audio-Video", "href": "http://audio-video.drupal-test.shanti.virginia.edu/"},
 			{"class": "images", "text": "Images", "href": "http://images.drupal-test.shanti.virginia.edu/"},
 			{"class": "visuals", "text": "Visuals", "href": "http://visuals.drupal-test.shanti.virginia.edu/"}
@@ -32,7 +32,7 @@
 			{"class": "texts", "text": "Texts", "href": "http://texts.shanti.virginia.edu/"},
 			{"class": "logo-shanti", "text": "Knowledge Base", "href": "https://wiki.shanti.virginia.edu/display/KB/UVa+Knowledge+Base"},
 			{"class": "sources", "text": "Sources", "href": "http://sources.shanti.virginia.edu/"},
-			{"class": "audio-video", "text": "Audio-Video", "href": "http://mediabase.shanti.virginia.edu/"},
+			{"class": "audio-video", "text": "Audio-Video", "href": "http://audio-video.shanti.virginia.edu/"},
 			{"class": "images", "text": "Images", "href": "http://images.shanti.virginia.edu/"},
 			{"class": "visuals", "text": "Visuals", "href": "http://visuals.shanti.virginia.edu/"}
 		]
