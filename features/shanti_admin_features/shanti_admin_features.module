@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Shanti Admin Features feature.
+ */
+
+include_once 'shanti_admin_features.features.inc';
