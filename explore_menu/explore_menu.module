@@ -46,7 +46,7 @@ function explore_menu_block_view($delta='') {
 	$block = array();
 	switch($delta) {
 		case 'explore_menu_block': 
-			$out = '<li id="collexplink" class="explore"><a href="#" role="button">' . variable_get('explore_link_text', EXPLORE_LINK_TEXT) . '<i class="icon shanticon-directions"></i></a></li>';
+			$out = '<li id="collexplink" class="explore"><a href="#" role="button" aria-label="Explore Collections">' . variable_get('explore_link_text', EXPLORE_LINK_TEXT) . '<i class="icon shanticon-directions"></i></a></li>';
 			$block['content'] = $out;
 			break;
 	}
