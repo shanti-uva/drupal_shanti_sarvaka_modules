@@ -140,6 +140,7 @@ function explore_menu_block_configure($delta='explore_menu_block') {
 				'#options' => array(
 					'none' => t('Choose a Domain'),
                      'local' => t('Local'),
+                     'predev' => t('Predev'),
 					'dev' => t('Dev'),
 					'staging' => t('Staging'),
 					'production' => t('Production'),
