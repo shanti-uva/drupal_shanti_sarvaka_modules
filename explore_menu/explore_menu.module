@@ -32,9 +32,6 @@ function explore_menu_block_info() {
   $blocks = array();
   $blocks['explore_menu_block'] = array(
     'info' => t('Shanti Explore Menu Block'),
-    'status' => TRUE,
-    'region' => 'header',
-    'visibility' => BLOCK_VISIBILITY_NOTLISTED,
    );
   return $blocks;
 }
@@ -46,7 +43,7 @@ function explore_menu_block_view($delta='') {
 	$block = array();
 	switch($delta) {
 		case 'explore_menu_block': 
-			$out = '<li id="collexplink" class="explore"><a href="#" role="button" aria-label="Explore Collections">' . variable_get('explore_link_text', EXPLORE_LINK_TEXT) . '<i class="icon shanticon-directions"></i></a></li>';
+			$out = '<li id="collexplink" class="explore"><a href="#">' . variable_get('explore_link_text', EXPLORE_LINK_TEXT) . '<i class="icon shanticon-directions"></i></a></li>';
 			$block['content'] = $out;
 			break;
 	}
@@ -142,9 +139,10 @@ function explore_menu_block_configure($delta='explore_menu_block') {
 				'#type' => 'select',
 				'#options' => array(
 					'none' => t('Choose a Domain'),
+                     'local' => t('Local'),
 					'dev' => t('Dev'),
-					'test' => t('Test'),
-					'prod' => t('Production'),
+					'staging' => t('Staging'),
+					'production' => t('Production'),
 				),
 			);
 				// Update Button
@@ -153,7 +151,7 @@ function explore_menu_block_configure($delta='explore_menu_block') {
 		    '#value' => t('Reset Links'),
 		    '#attributes' => array('title' => t('Reset Explore Menu Links from JSON File')),
 		    '#prefix' => '<div class="form-item">',
-		    '#suffix' => '<div id="em-update-msg"></div></div>',
+		    '#suffix' => '<div id="em-update-msg">' .  t('The explore menu links currently point to: ') . explore_menu_get_current_domain() . '</div></div>',
 		    '#states' => array(
 		      'invisible' => array(
 		        ':input[name="update_links_domain"]' => array('value' => 'none'),
@@ -178,14 +176,29 @@ function explore_menu_block_save($delta = '', $edit = array()) {
 	variable_set('explore_div_title', $edit['explore_div_title']);
 	variable_set('explore_link_text', $edit['explore_link_text']);
 }
-
+/**
+ * Get current domain that links are displaying based on the first link
+ */
+function explore_menu_get_current_domain() {
+  $datastr = file_get_contents(drupal_get_path('module', 'explore_menu') . '/js/shanti-collections.json');
+  $json = json_decode($datastr, true);
+  $linktree = menu_tree_all_data('shanti-explore-menu');
+  $keys = array_keys($linktree);
+  $currsubj = preg_replace('/https?\:\/\//', '', $linktree[$keys[1]]['link']['link_path']);
+  foreach ($json['links'] as $domain => $dlinks) {
+      $myhref = preg_replace('/https?\:\/\//', '', $dlinks[1]['href']);
+      if ($myhref == $currsubj) { return $domain; }
+  }
+  return "custom domain";
+}
+ 
 /**
  * Used by theme to get the icon class for a link with a specific title. Means all links must have unique titles. Could use href?
  */
 function explore_menu_get_iconclass($title) {
   $datastr = file_get_contents(drupal_get_path('module', 'explore_menu') . '/js/shanti-collections.json');
   $json = json_decode($datastr);
-  foreach($json->links->prod as $n => $link) {
+  foreach($json->links->production as $n => $link) {
     if($link->text == $title) {
       return $link->class;
     }
@@ -241,7 +254,7 @@ function explore_menu_update($form, $form_state) {
 			}
 	  }
 	  if(empty($msg)) {
-	  	$msg = "<ul><li class=\"alert-success\">Explore Collections Menus was successfully updated! ($rct items removed. $ct items added.)</li></ul>";
+	  	$msg = "<ul><li class=\"alert-success\">Explore Collections Menus was successfully updated to point to: $domain <br/>($rct items removed. $ct items added.)</li></ul>";
 	  } else {
 	  	$msg = '<ul>' . $msg . '</ul>';
 	  }
