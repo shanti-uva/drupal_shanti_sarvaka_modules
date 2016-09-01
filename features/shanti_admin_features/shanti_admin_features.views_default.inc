@@ -593,7 +593,7 @@ function shanti_admin_features_views_default_views() {
 
   /* Display: Shanti User Admin Page */
   $handler = $view->new_display('page', 'Shanti User Admin Page', 'page');
-  $handler->display->display_options['path'] = 'shanti/admin/users';
+  $handler->display->display_options['path'] = 'shanti/admin/people';
   $export['shanti_user_admin'] = $view;
 
   return $export;
